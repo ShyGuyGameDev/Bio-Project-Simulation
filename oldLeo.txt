@@ -1,0 +1,2325 @@
+var leoScreen = 0;
+var stop = true;
+var lysis = false;
+var oxydation = false;
+var link = false;
+var click;
+var phosphorylated = false;
+var phospho = 0;
+var nadhmove1 = false;
+var nadhmove2 = false;
+var ms = 80;
+var ms2 = 80;
+var pyr = true;
+var utimer = 0;
+var linkdelay = 0;
+var pdescription =
+  "Phosphorylation is the first step in glycolysis, where two ATP " +
+  "molecules phosphorylize a glucose molecules by donating it one " +
+  "phosphate group each, turning the glucose molecule into a " +
+  "glucose-6-phosphate, and the two ATP molecules into ADP. This " +
+  "is also known as the energy investment phase";
+var linkdes =
+  "The Link Reaction is the step connecting Glycolysis to the Krebs cycle. It " +
+  "happens in the mitochondria, the background on the screen, where each " +
+  "pyruvate from glycolysis is oxidized, turning into an acetyl group, " +
+  "releasing CO2 and reducing NAD+ to NADH. The acetyl group is now attached " +
+  "to the coenzyme CoA, forming Acetyl CoA, which will go to Krebs Cycle. ";
+var timeRan = 0;
+var timeRin = 0;
+var timeRen = 0;
+var phosphoTimer = 0;
+var mdelay = 0;
+var phosphoDelay = 60;
+var odes =
+  "The final stage of glycolysis, oxidation, also known as the payoff phase, is " +
+  "where G3P gets oxidized, turning into pyruvate. G3P then gets further oxidized, " +
+  "reducing the electron carrier NAD+ and turning it into NADH, which will carry " +
+  "electrons to the ETC. In this process, four phosphate groups get released to " +
+  "four ADP, turning them into four ATP, making a net gain of two ATP, and a " +
+  "byproduct of two water molecules.";
+var transition = 0;
+var pdes2 =
+  "This is where the two ATP transfer " +
+  "a phosphate group each to the " +
+  "glucose molecule";
+var ldes =
+  "The second step of glycolysis is lysis, where glucose is broken " +
+  "down into two glyceraldehyde-3-phosphates, G3P. The two ADP " +
+  "molecules left disperse and leave the system. ";
+var pshower = 0;
+var ldes2 = "Here is where the ATP molecules disperse, and G3P remains";
+
+function leoSetup() {
+  // createCanvas(800, 600);
+  
+
+    button = createButton("Phosphorylation");
+    button.position(20, 20);
+    button.mousePressed(startPhosphorylation);
+    button.style("font-size", "24px");
+    button.style("padding", "15px");
+    button.style("border-radius", "10px");
+    button.style("cursor", "pointer");
+    button.hide()
+
+    button1 = createButton("Lysis");
+    button1.position(20, 20);
+    button1.mousePressed(startLysis);
+    button1.style("font-size", "24px");
+    button1.style("padding", "15px");
+    button1.style("border-radius", "10px");
+    button1.style("cursor", "pointer");
+    button1.hide()
+
+    button2 = createButton("Oxidation");
+    button2.position(20, 20);
+    button2.mousePressed(startOxydation);
+    button2.style("font-size", "24px");
+    button2.style("padding", "15px");
+    button2.style("border-radius", "10px");
+    button2.style("cursor", "pointer");
+    button2.hide()
+  
+    button3 = createButton("Link Reaction");
+    button3.position(20, 20);
+    button3.mousePressed(startLink);
+    button3.style("font-size", "24px");
+    button3.style("padding", "15px");
+    button3.style("border-radius", "10px");
+    button3.style("cursor", "pointer");
+    button3.hide()
+
+  // Glucose
+  objects[objects.length] = new object(
+    "Glucose",
+    100, //x
+    380, //y
+    120, //length
+    120, //height
+    false, //draggable
+    [255, 0, 0], //color
+    true, //working
+    0 //existing
+  );
+
+  // ATP 1
+  objects[objects.length] = new object(
+    "ATP",
+    600,
+    420,
+    140,
+    120,
+    false,
+    [],
+    true,
+    0
+  );
+
+  // ATP 2
+  objects[objects.length] = new object(
+    "ATP",
+    650,
+    320,
+    140,
+    120,
+    false,
+    [],
+    true,
+    0
+  );
+
+  // ADP
+  objects[objects.length] = new object(
+    "ADP",
+    -100,
+    -100,
+    140,
+    120,
+    false,
+    [],
+    true,
+    0
+  );
+
+  objects[objects.length] = new object(
+    "ADP",
+    -100,
+    -100,
+    140,
+    120,
+    false,
+    [],
+    true,
+    0
+  );
+
+  // Phosphate groups
+  objects[objects.length] = new object(
+    "Phosphate group",
+    -100,
+    -100,
+    60,
+    60,
+    false,
+    [0, 255, 0],
+    true,
+    0
+  );
+
+  objects[objects.length] = new object(
+    "Phosphate group",
+    -100,
+    -100,
+    60,
+    60,
+    false,
+    [0, 255, 0],
+    true,
+    0
+  );
+
+  // G3P
+  objects[objects.length] = new object(
+    "G3P",
+    -100,
+    -100,
+    140,
+    120,
+    false,
+    [],
+    true,
+    0
+  );
+
+  // ========================== OBJECTS FROM SCREEN 1 =================================
+
+objects[objects.length] = new object("G3P", -100, -100, 140, 130, false, [0, 255, 0], false, 0);  
+  
+  // +================== OBECJTS FROM SCREEN 2 +==================
+  
+//   // ===========X,Y, and SIZE =================
+//   // G3P
+//     objects[objects.length] = new object(
+//       "G3P",
+//       170,
+//       390,
+//       150,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "G3P",
+//       350,
+//       390,
+//       150,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+  // =================== ADDDED================
+
+    // NAD+
+    objects[objects.length] = new object(
+      "NAD+",
+      -570,
+      390,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      true,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "NAD+",
+      -400,
+      390,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      true,
+      0
+    );
+
+  // =================== ADDDED================
+  
+    // Phosphate group
+    objects[objects.length] = new object(
+      "Phosphate group",
+      220,
+      390,
+      50,
+      50,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Phosphate group",
+      -100,
+      -100,
+      50,
+      50,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Phosphate group",
+      400,
+      390,
+      50,
+      50,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Phosphate group",
+      -100,
+      -100,
+      50,
+      50,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+  
+  // =================== X,Y,SIZEY ================
+
+//     //ADP
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -270,
+//       265,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     // =================== Y,SIZEY ================
+
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -100,
+//       265,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+  // ================== ADDED ===================
+    //Pyruvate
+    objects[objects.length] = new object(
+      "Pyruvate",
+      -100,
+      520,
+      140,
+      130,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Pyruvate",
+      -100,
+      520,
+      140,
+      130,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //Hydrogen ions
+    objects[objects.length] = new object(
+      "H",
+      175,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "H",
+      355,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //Electrons
+    objects[objects.length] = new object(
+      "Electron",
+      175,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Electron",
+      355,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Electron",
+      135,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Electron",
+      315,
+      345,
+      45,
+      45,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //NADH
+    objects[objects.length] = new object(
+      "NADH",
+      -100,
+      390,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "NADH",
+      -100,
+      390,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //ATP
+    objects[objects.length] = new object(
+      "Atp",
+      -100,
+      -100,
+      140,
+      130,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Atp",
+      -100,
+      -100,
+      140,
+      130,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Atp",
+      -100,
+      -100,
+      140,
+      130,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Atp",
+      -100,
+      -100,
+      140,
+      130,
+      true,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //H2O
+    objects[objects.length] = new object(
+      "H2O",
+      -100,
+      -100,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "H2O",
+      -100,
+      -100,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+  // ================= OBJECTS FROM SCENE 3 ============
+  
+  // ================= NO CHANGE ======================
+//   //Pyruvate
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+  // ==================== NO CHANGE =================
+    // // NAD+
+    // objects[objects.length] = new object(
+    //   "NAD+",
+    //   -570,
+    //   500,
+    //   100,
+    //   100,
+    //   false,
+    //   [173, 216, 230],
+    //   true,
+    //   0
+    // );
+
+  // ================ Y is 500 =================
+//     objects[objects.length] = new object(
+//       "NAD+",
+//       -400,
+//       500,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//   // ================= X is -100 =================
+//     //Electrons
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+  
+//   // ==================== NO CHANGE ==================
+
+//     //NADH
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+  // ================== ADDED+===================
+    //CO2
+    objects[objects.length] = new object(
+      "CO2",
+      180,
+      400,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "CO2",
+      360,
+      400,
+      100,
+      100,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    //Acetyl CoA
+    objects[objects.length] = new object(
+      "Acetyl CoA",
+      160,
+      390,
+      130,
+      140,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+
+    objects[objects.length] = new object(
+      "Acetyl CoA",
+      340,
+      390,
+      130,
+      140,
+      false,
+      [0, 255, 0],
+      false,
+      0
+    );
+  
+  
+}
+
+function leo() {
+//  console.log("hi");
+  background(220);
+  
+  var adpm = 1
+
+  var glucose = objects[0];
+  var atp1 = objects[1];
+  var atp2 = objects[2]
+  var adp1 = objects[3];
+  var adp2 = objects[4];
+  
+  
+  var phosphate1 = objects[5];
+  var phosphate2 = objects[6];
+  
+  var g3p1 = objects[7];
+  var g3p2 = objects[8];
+  var nad1 = objects[9];
+  var nad2 = objects[10];
+  var phosphate1 = objects[11];
+  var phosphate2 = objects[12];    
+  var phosphate3 = objects[13];
+  var phosphate4 = objects[14];
+  var adp1 = objects[8];
+  var adp2 = objects[9];
+  var adp3 = objects[10];
+  var adp4 = objects[11];
+  var pyruvate1 = objects[15];
+  var pyruvate2 = objects[16];
+  var h1 = objects[17];
+  var h2 = objects[18];
+  var electron1 = objects[19];
+  var electron2 = objects[20];
+  var electron3 = objects[21];
+  var electron4 = objects[22];
+  var nadh1 = objects[23];
+  var nadh2 = objects[24];
+  var atp1 = objects[25];
+  var atp2 = objects[26];
+  var atp3 = objects[27];
+  var atp4 = objects[28];
+  var h2o1 = objects[29];
+  var h2o2 = objects[30];
+  var co21 = objects[31];
+  var co22 = objects[32];
+  var acetyl1 = objects[33];
+  var acetyl2 = objects[34];
+  leoScreen=transition
+
+  if (leoScreen == 0) {
+
+    button.show()
+
+    fill(0);
+    textSize(22);
+    text(pdescription, 260, 30, 530);
+
+    if (phosphorylated) {
+      let d1 = dist(atp1.x, atp1.y, glucose.x, glucose.y);
+      let d2 = dist(atp2.x, atp2.y, glucose.x, glucose.y);
+
+      // Move ATPs toward glucose
+      if (d1 > 80) {
+//         print("moving")
+        atp1.x += (glucose.x - atp1.x) * 0.05;
+        atp1.y += (glucose.y - atp1.y) * 0.05;
+      } else {
+        glucose.x = atp1.x + 70;
+      }
+
+      if (d2 > 90) {
+        atp2.x += (glucose.x - atp2.x) * 0.05;
+        atp2.y += (glucose.y - atp2.y) * 0.05;
+      } else {
+        atp2.x = glucose.x + 75;
+        atp2.y = glucose.y + 2;
+      }
+
+      if (d1 <= 90 && d2 <= 90 && phospho == 0) {
+        phospho = 1;
+        phosphoTimer = 0;
+        // print("happening")
+      }
+
+      if (phospho == 1) {
+        // print(phosphoDelay)
+        phosphoTimer++;
+        if (phosphoTimer >= phosphoDelay) {
+          adp1.working = true
+          adp2.working = true
+          // objects[1] = new object(
+          //   "ADP",
+          //   atp1.x,
+          //   atp1.y,
+          //   120,
+          //   100,
+          //   true,
+          //   [],
+          //   true,
+          //   0
+          // );
+          // objects[2] = new object(
+          //   "ADP",
+          //   atp2.x,
+          //   atp2.y,
+          //   120,
+          //   100,
+          //   true,
+          //   [],
+          //   true,
+          //   0
+          // );
+          objects[5].x = glucose.x - 20;
+          objects[5].y = glucose.y - 80;
+          objects[6].x = glucose.x + 20;
+          objects[6].y = glucose.y - 80;
+          textSize(22);
+          text(pdes2, 360, 280, 400);
+          transition = 1;
+          if (transition == 1) {
+            leoScreen = 1;
+          }
+        }
+      }
+    }
+  } else if (leoScreen == 1) {
+    console.log("Screen is 1");
+    g3p = objects[8]
+    
+    g3p.working = true
+
+    button1.show()
+    button.hide();
+
+    // button1 = createButton("Lysis");
+    // button1.position(20, 20);
+    // button1.mousePressed(startLysis);
+    // button1.style("font-size", "24px");
+    // button1.style("padding", "15px");
+    // button1.style("border-radius", "10px");
+    // button1.style("cursor", "pointer");
+
+    glucose.x = 230;
+    glucose.y = 380;
+    glucose.sizeX = 110;
+    glucose.sizeY = 110;
+
+    atp1.x = 160;
+    atp1.y = 380;
+    atp1.sizeX = 150;
+    atp1.sizeY = 130;
+
+    atp2.x = 330;
+    atp2.y = 380;
+    atp2.sizeX = 150;
+    atp2.sizeY = 130;
+
+    phosphate1.x = 210;
+    phosphate1.y = 335;
+    phosphate1.sizeX = 50;
+    phosphate1.sizeY = 50;
+
+    phosphate2.x = 250;
+    phosphate2.y = 335;
+    phosphate2.sizeX = 50;
+    phosphate2.sizeY = 50;
+
+    glucose = objects[0];
+    adp1 = objects[1];
+    adp2 = objects[2];
+    adpm = 1;
+    phosphate1 = objects[3];
+    phosphate2 = objects[4];
+    g3p = objects[5];
+    g3p2 = objects[6];
+
+    if (lysis == true) {
+      adp1.x--;
+      adp2.x = adp2.x + 5;
+      text(ldes2, 320, 320, 460);
+      glucose.x = -100;
+      phosphate1.x = -100;
+      phosphate2.x = -100;
+      g3p.x = 210;
+      g3p.y = 340;
+      g3p2.x = 210;
+      g3p2.y = 400;
+      pshower = 1;
+    }
+    fill(0);
+    textSize(22);
+    text(ldes, 220, 30, 530);
+
+    if (pshower == 1) {
+      if (timeRan < 20) {
+        timeRan += 1;
+        particleShower(
+          g3p.x,
+          g3p.y,
+          500,
+          0,
+          40,
+          0,
+          0.6,
+          0,
+          2,
+          0,
+          20,
+          0,
+          255,
+          0,
+          0,
+          20
+        );
+        transition = 2;
+      }
+    }
+  } else if (leoScreen == 2) {
+    
+    g3p1.x = 170
+    g3p1.y = 390
+    g3p1.sizeX = 150
+    g3p1.sizeY = 140
+    
+    g3p2.x = 350
+    g3p2.y = 390
+    g3p2.sizeX = 150
+    g3p2.sizeY = 140
+    
+    adp1.y = 265
+    adp1.sizeY = 130
+    
+    nad1.working = true
+    nad2.working = true
+    phosphate1.working = true
+    phosphate2.working = true
+    phosphate3.working = true
+    phosphate4.working = true
+    pyruvate1.working = true
+    pyruvate2.working = true
+    h1.working = true
+    h2.working = true
+    electron1.working = true
+    electron2.working = true
+    electron3.working = true
+    electron4.working = true
+    nadh1.working = true
+    nadh2.working = true
+    atp1.working = true
+    atp2.working = true
+    atp3.working = true
+    atp4.working = true
+    h2o1.working = true
+    h2o2.working = true
+    
+    button1.hide()
+    button2.show()
+    
+    // button2 = createButton("Oxidation");
+    // button2.position(20, 20);
+    // button2.mousePressed(startOxydation);
+    // button2.style("font-size", "24px");
+    // button2.style("padding", "15px");
+    // button2.style("border-radius", "10px");
+    // button2.style("cursor", "pointer");
+    
+    
+    textSize(19);
+    text(odes, 200, 25, 525);
+    if (oxydation) {
+      let d3 = dist(phosphate1.x, phosphate1.y, adp1.x, adp1.y);
+      let d4 = dist(phosphate2.x, phosphate2.y, adp2.x, adp2.y);
+      let d5 = dist(phosphate3.x, phosphate3.y, adp3.x, adp3.y);
+      let d6 = dist(phosphate4.x, phosphate4.y, adp4.x, adp4.y);
+      let d7 = dist(electron1.x, electron1.y, nad1.x, nad1.y);
+      let d8 = dist(electron2.x, electron2.y, nad2.x, nad2.y);
+      let d9 = dist(electron3.x, electron3.y, nad1.x, nad1.y);
+      let d10 = dist(electron4.x, electron4.y, nad2.x, nad2.y);
+      let d11 = dist(h1.x, h1.y, nad2.x, nad2.y);
+      if (adp1.x < 500) {
+        adp1.x += 3;
+        adp2.x += 3;
+        adp3.x += 3;
+        adp4.x += 3;
+      }
+      if (adp1.x > 500) {
+        if (nad1.x < 500) {
+          nad1.x += 3;
+          nad2.x += 3;
+        } else {
+          electron1.x += (nad1.x - electron1.x) * 0.05;
+          electron1.y += (nad1.y - electron1.y) * 0.05;
+          electron2.x += (nad2.x - electron2.x) * 0.05;
+          electron2.y += (nad2.y - electron2.y) * 0.05;
+          electron3.x += (nad1.x - electron3.x) * 0.05;
+          electron3.y += (nad1.y - electron3.y) * 0.05;
+          electron4.x += (nad2.x - electron4.x) * 0.05;
+          electron4.y += (nad2.y - electron4.y) * 0.05;
+          if (d8 < 180) {
+            h1.x += (nad1.x - h1.x) * 0.05;
+            h1.y += (nad1.y - h1.y) * 0.05;
+            h2.x += (nad2.x - h2.x) * 0.05;
+            h2.y += (nad2.y - h2.y) * 0.05;
+            if (d11 < 180) {
+              nad1.x = 7000;
+              nad2.x = 7000;
+              nadh1.x = 500;
+              nadh2.x = 680;
+              g3p1.x = -100;
+              g3p2.x = -100;
+              pyruvate1.x = 160;
+              pyruvate1.y = 380;
+              pyruvate2.x = 340;
+              pyruvate2.y = 380;
+              h2o1.x = 160;
+              h2o1.y = 510;
+              h2o2.x = 340;
+              h2o2.y = 510;
+            }
+          }
+        }
+        pyr = false;
+        phosphate1.x += (adp1.x - phosphate1.x) * 0.05;
+        phosphate1.y += (adp1.y - phosphate1.y) * 0.05;
+        phosphate2.x += (adp2.x - phosphate2.x) * 0.05;
+        phosphate2.y += (adp2.y - phosphate2.y) * 0.05;
+        phosphate3.x += (adp3.x - phosphate3.x) * 0.05;
+        phosphate3.y += (adp3.y - phosphate3.y) * 0.05;
+        phosphate4.x += (adp4.x - phosphate4.x) * 0.05;
+        phosphate4.y += (adp4.y - phosphate4.y) * 0.05;
+        if (d3 < 180 && d4 < 180 && d5 < 180 && d6 < 180) {
+          adp1.x = 7000;
+          adp2.x = 7000;
+          adp3.x = 7000;
+          adp4.x = 7000;
+          atp1.x = 500;
+          atp1.y = 265;
+          atp2.x = 670;
+          atp2.y = 265;
+          atp3.x = 500;
+          atp3.y = 520;
+          atp4.x = 670;
+          atp4.y = 520;
+          transition = 2;
+        }
+      }
+    }
+    
+  } else if (leoScreen == 3) {
+    
+    nad2.y = 500
+    electron1.x = -100
+    electron2.x = -100
+    electron3.x = -100
+    electron4.x = -100
+    
+    co21.working = true
+    co22.woring = true
+    acetyl1.working = true
+    acetyl2.working = true
+    
+    button2.hide()
+    button3.show()
+    
+    // button3 = createButton("Link Reaction");
+    // button3.position(20, 20);
+    // button3.mousePressed(startLink);
+    // button3.style("font-size", "24px");
+    // button3.style("padding", "15px");
+    // button3.style("border-radius", "10px");
+    // button3.style("cursor", "pointer");
+    
+    image(Mitochondria, 370, 290, ms, ms2);
+    mdelay += 1;
+    if (mdelay > 100 && mdelay < 180) {
+      ms *= 1.1;
+      ms2 *= 1.1;
+    }
+    if (mdelay > 190) {
+      textSize(22);
+      text(linkdes, 223, 25, 545);
+      let d12 = dist(nad1.x, nad1.y, pyruvate2.x, pyruvate2.y);
+      let d13 = dist(nad2.x, nad2.y, pyruvate1.x, pyruvate1.y);
+      let d14 = dist(electron1.x, electron1.y, nad1.x, nad1.y);
+      let d15 = dist(electron2.x, electron2.y, nad1.x, nad1.y);
+      let d16 = dist(electron3.x, electron3.y, nad2.x, nad2.y);
+      let d17 = dist(electron4.x, electron4.y, nad2.x, nad2.y);
+      //let d11 = dist(h1.x, h1.y, nad2.x, nad2.y);
+      if (link == true) {
+        pyruvate1.x = 160;
+        pyruvate1.y = 390;
+        pyruvate2.x = 340;
+        pyruvate2.y = 390;
+        electron1.x = 175;
+        electron1.y = 320;
+        electron2.x = 355;
+        electron2.y = 320;
+        electron3.x = 135;
+        electron3.y = 320;
+        electron4.x = 315;
+        electron4.y = 320;
+        if (nad1.x < 500 && stop == true) {
+          nad1.x += 4;
+          nad2.x += 4;
+        } else {
+          stop = false;
+          objects[2].draggable = true;
+          objects[3].draggable = true;
+          if (stop == false) {
+            if (d12 < 70) {
+              objects[5].working = false;
+              objects[7].working = false;
+              objects[11].working = true;
+              nadh1.x = nad1.x;
+              nadh1.y = nad1.y;
+              nad1.x = 1000;
+              nadhmove1 = true;
+              objects[2].draggable = false;
+              nadhmove1 = true;
+              pshower = 2;
+              if (pshower == 2) {
+                if (timeRin < 20) {
+                  timeRin += 1;
+                  particleShower(
+                    pyruvate2.x,
+                    pyruvate2.y,
+                    500,
+                    0,
+                    40,
+                    0,
+                    0.3,
+                    0,
+                    2,
+                    0,
+                    20,
+                    80,
+                    180,
+                    240,
+                    0,
+                    20
+                  );
+                  objects[1].working = false;
+                  objects[13].working = true;
+                }
+              }
+            }
+            if (d13 < 70) {
+              objects[4].working = false;
+              objects[6].working = false;
+              objects[10].working = true;
+              nadh2.x = nad2.x;
+              nadh2.y = nad2.y;
+              nad2.x = 1000;
+              nadhmove2 = true;
+              objects[3].draggable = false;
+              pshower = 3;
+              if (pshower == 3) {
+                if (timeRen < 20) {
+                  timeRen += 1;
+                  particleShower(
+                    pyruvate1.x,
+                    pyruvate1.y,
+                    500,
+                    0,
+                    40,
+                    0,
+                    0.3,
+                    0,
+                    2,
+                    0,
+                    20,
+                    80,
+                    180,
+                    240,
+                    0,
+                    20
+                  );
+                  objects[0].working = false;
+                  objects[12].working = true;
+                }
+              }
+            }
+            if (nadhmove2 == true && nadhmove1 == true) {
+              co21.x += 2;
+              co21.y += 1;
+              co22.x += 2;
+              co22.y += 1;
+              nadh1.x += 3;
+              nadh2.x += 3;
+              nadh1.y -= 1;
+              nadh2.y -= 1;
+              objects[1].working = false;
+              objects[0].working = false;
+              objects[12].working = true;
+            }
+          }
+          textSize(16);
+          text(
+            "*drag an NAD+ to a Pyruvate molecule, drag the second NAD+ to the second   Pyruvate molecule*",
+            40,
+            120,
+            150
+          );
+        }
+      }
+    }
+    
+  }
+}
+
+function startPhosphorylation() {
+  phosphorylated = true;
+}
+
+function startLysis() {
+  lysis = true;
+}
+
+function startOxydation() {
+    oxydation = true;
+}
+
+function startLink() {
+    link = true;
+}
+
+
+// // function leoButton1(){
+// //   push()
+// //   translate(leoBtn1.x,leoBtn1.y)
+// //   rectMode(CENTER)
+// //   fill("black")
+// //   strokeWeight(10)
+// //   stroke("white")
+// //   if(leoBtn1.hover){
+// //     leoBtn1.sizev = max(0.05,leoBtn1.sizev);
+// //     scale(leoBtn1.size,leoBtn1.size);
+// //   }
+// //   else{
+// //     leoBtn1.sizev = min(0.01,leoBtn1.sizev)
+// //     scale(leoBtn1.size,leoBtn1.size)
+// //   }
+// //   rect(0,0,leoBtn1.sizeX,leoBtn1.sizeY,5)
+// //   textAlign(CENTER)
+// //   textSize(50)
+// //   fill("white")
+// //   noStroke()
+// //   rotate(cos(frameCount*2)*5)
+// //   text("NEXT",0,12,leoBtn1.sizeX,leoBtn1.sizeY)
+// //   pop()
+// //   leoBtn1.work()
+// //   if(leoBtn.clicked){
+// //     leoScreen=1
+// //   }
+// // }
+
+// // ======================== THIS WAS FROM SCREEN 0 ================================
+
+// function leo() {
+//   background(220);
+
+//   var glucose = objects[0];
+//   var atp1 = objects[1];
+//   var atp2 = objects[2];
+//   var phosphate1 = objects[6];
+//   var phosphate2 = objects[5];
+
+//   fill(0);
+//   textSize(22);
+//   text(pdescription, 260, 30, 530);
+
+//   if (phosphorylated) {
+//     let d1 = dist(atp1.x, atp1.y, glucose.x, glucose.y);
+//     let d2 = dist(atp2.x, atp2.y, glucose.x, glucose.y);
+
+//     // Move ATPs toward glucose
+//     if (d1 > 80) {
+//       atp1.x += (glucose.x - atp1.x) * 0.05;
+//       atp1.y += (glucose.y - atp1.y) * 0.05;
+//     } else {
+//       glucose.x = atp1.x + 70;
+//     }
+
+//     if (d2 > 90) {
+//       atp2.x += (glucose.x - atp2.x) * 0.05;
+//       atp2.y += (glucose.y - atp2.y) * 0.05;
+//     } else {
+//       atp2.x = glucose.x + 75;
+//       atp2.y = glucose.y + 2;
+//     }
+
+//     if (d1 <= 90 && d2 <= 90 && phospho == 0) {
+//       phospho = 1;
+//       phosphoTimer = 0;
+//     }
+
+//     if (phospho == 1) {
+//       phosphoTimer++;
+//       if (phosphoTimer >= phosphoDelay) {
+//         objects[1] = new object(
+//           "ADP",
+//           atp1.x,
+//           atp1.y,
+//           120,
+//           100,
+//           true,
+//           [],
+//           true,
+//           0
+//         );
+//         objects[2] = new object(
+//           "ADP",
+//           atp2.x,
+//           atp2.y,
+//           120,
+//           100,
+//           true,
+//           [],
+//           true,
+//           0
+//         );
+//         objects[6].x = glucose.x - 20;
+//         objects[6].y = glucose.y - 80;
+//         objects[5].x = glucose.x + 20;
+//         objects[5].y = glucose.y - 80;
+//         textSize(22);
+//         text(pdes2, 360, 280, 400);
+//         transition = 1;
+//         if (transition == 1) {
+//           leoScreen = 1;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ============================ THIS WAS FROM SCREEN 1 =============================
+// console.log(leoScreen, "bru");
+// if (leoScreen == 1) {
+//   function leoSetup() {
+//     createCanvas(800, 600);
+
+//     // Glucose
+//     objects[objects.length] = new object(
+//       "Glucose",
+//       230,
+//       380,
+//       110,
+//       110,
+//       false,
+//       [255, 0, 0],
+//       true,
+//       0
+//     );
+
+//     // ADP
+//     objects[objects.length] = new object(
+//       "ADP",
+//       160,
+//       380,
+//       150,
+//       130,
+//       false,
+//       [],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "ADP",
+//       330,
+//       380,
+//       150,
+//       130,
+//       false,
+//       [],
+//       true,
+//       0
+//     );
+
+//     // Phosphate groups
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       210,
+//       335,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       250,
+//       335,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     // G3P
+//     objects[objects.length] = new object(
+//       "G3P",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     // G3P
+//     objects[objects.length] = new object(
+//       "G3P",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+//   }
+
+//   function leo() {
+//     background(220);
+//     var glucose = objects[0];
+//     var adp1 = objects[1];
+//     var adp2 = objects[2];
+//     var adpm = 1;
+//     var phosphate1 = objects[3];
+//     var phosphate2 = objects[4];
+//     var g3p = objects[5];
+//     var g3p2 = objects[6];
+
+//     if (lysis == true) {
+//       adp1.x--;
+//       adp2.x = adp2.x + 5;
+//       text(ldes2, 320, 320, 460);
+//       glucose.x = -100;
+//       phosphate1.x = -100;
+//       phosphate2.x = -100;
+//       g3p.x = 210;
+//       g3p.y = 340;
+//       g3p2.x = 210;
+//       g3p2.y = 400;
+//       pshower = 1;
+//     }
+//     fill(0);
+//     textSize(22);
+//     text(ldes, 220, 30, 530);
+
+//     if (pshower == 1) {
+//       if (timeRan < 20) {
+//         timeRan += 1;
+//         particleShower(
+//           g3p.x,
+//           g3p.y,
+//           500,
+//           0,
+//           40,
+//           0,
+//           0.6,
+//           0,
+//           2,
+//           0,
+//           20,
+//           0,
+//           255,
+//           0,
+//           0,
+//           20
+//         );
+//         transition = 2;
+//       }
+//     }
+//   }
+// }
+
+// // ========================= THIS WAS FROM SCREEN 2 ======================
+// if (leoScreen == 2) {
+//   function leoSetup() {
+//     createCanvas(800, 600);
+
+//     // G3P
+//     objects[objects.length] = new object(
+//       "G3P",
+//       170,
+//       390,
+//       150,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "G3P",
+//       350,
+//       390,
+//       150,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     // NAD+
+//     objects[objects.length] = new object(
+//       "NAD+",
+//       -570,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "NAD+",
+//       -400,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     // Phosphate group
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       220,
+//       390,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       -100,
+//       -100,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       400,
+//       390,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Phosphate group",
+//       -100,
+//       -100,
+//       50,
+//       50,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //ADP
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -270,
+//       265,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -100,
+//       265,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -270,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "ADP",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //Pyruvate
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //Hydrogen ions
+//     objects[objects.length] = new object(
+//       "H",
+//       175,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "H",
+//       355,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //Electrons
+//     objects[objects.length] = new object(
+//       "Electron",
+//       175,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       355,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       135,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       315,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //NADH
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //ATP
+//     objects[objects.length] = new object(
+//       "Atp",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Atp",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Atp",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Atp",
+//       -100,
+//       -100,
+//       140,
+//       130,
+//       true,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //H2O
+//     objects[objects.length] = new object(
+//       "H2O",
+//       -100,
+//       -100,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "H2O",
+//       -100,
+//       -100,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     button2 = createButton("Oxidation");
+//     button2.position(20, 20);
+//     button2.mousePressed(startOxydation);
+//     button2.style("font-size", "24px");
+//     button2.style("padding", "15px");
+//     button2.style("border-radius", "10px");
+//     button2.style("cursor", "pointer");
+//   }
+//   function startOxydation() {
+//     oxydation = true;
+//   }
+
+//   function leo() {
+//     background(220);
+//     var g3p1 = objects[0];
+//     var g3p2 = objects[1];
+//     var nad1 = objects[2];
+//     var nad2 = objects[3];
+//     var phosphate1 = objects[4];
+//     var phosphate2 = objects[5];
+//     var phosphate3 = objects[6];
+//     var phosphate4 = objects[7];
+//     var adp1 = objects[8];
+//     var adp2 = objects[9];
+//     var adp3 = objects[10];
+//     var adp4 = objects[11];
+//     var pyruvate1 = objects[12];
+//     var pyruvate2 = objects[13];
+//     var h1 = objects[14];
+//     var h2 = objects[15];
+//     var electron1 = objects[16];
+//     var electron2 = objects[17];
+//     var electron3 = objects[18];
+//     var electron4 = objects[19];
+//     var nadh1 = objects[20];
+//     var nadh2 = objects[21];
+//     var atp1 = objects[22];
+//     var atp2 = objects[23];
+//     var atp3 = objects[24];
+//     var atp4 = objects[25];
+//     var h2o1 = objects[26];
+//     var h2o2 = objects[27];
+//     textSize(19);
+//     text(odes, 200, 25, 525);
+//     if (oxydation) {
+//       let d3 = dist(phosphate1.x, phosphate1.y, adp1.x, adp1.y);
+//       let d4 = dist(phosphate2.x, phosphate2.y, adp2.x, adp2.y);
+//       let d5 = dist(phosphate3.x, phosphate3.y, adp3.x, adp3.y);
+//       let d6 = dist(phosphate4.x, phosphate4.y, adp4.x, adp4.y);
+//       let d7 = dist(electron1.x, electron1.y, nad1.x, nad1.y);
+//       let d8 = dist(electron2.x, electron2.y, nad2.x, nad2.y);
+//       let d9 = dist(electron3.x, electron3.y, nad1.x, nad1.y);
+//       let d10 = dist(electron4.x, electron4.y, nad2.x, nad2.y);
+//       let d11 = dist(h1.x, h1.y, nad2.x, nad2.y);
+//       if (adp1.x < 500) {
+//         adp1.x += 3;
+//         adp2.x += 3;
+//         adp3.x += 3;
+//         adp4.x += 3;
+//       }
+//       if (adp1.x > 500) {
+//         if (nad1.x < 500) {
+//           nad1.x += 3;
+//           nad2.x += 3;
+//         } else {
+//           electron1.x += (nad1.x - electron1.x) * 0.05;
+//           electron1.y += (nad1.y - electron1.y) * 0.05;
+//           electron2.x += (nad2.x - electron2.x) * 0.05;
+//           electron2.y += (nad2.y - electron2.y) * 0.05;
+//           electron3.x += (nad1.x - electron3.x) * 0.05;
+//           electron3.y += (nad1.y - electron3.y) * 0.05;
+//           electron4.x += (nad2.x - electron4.x) * 0.05;
+//           electron4.y += (nad2.y - electron4.y) * 0.05;
+//           if (d8 < 180) {
+//             h1.x += (nad1.x - h1.x) * 0.05;
+//             h1.y += (nad1.y - h1.y) * 0.05;
+//             h2.x += (nad2.x - h2.x) * 0.05;
+//             h2.y += (nad2.y - h2.y) * 0.05;
+//             if (d11 < 180) {
+//               nad1.x = 7000;
+//               nad2.x = 7000;
+//               nadh1.x = 500;
+//               nadh2.x = 680;
+//               g3p1.x = -100;
+//               g3p2.x = -100;
+//               pyruvate1.x = 160;
+//               pyruvate1.y = 380;
+//               pyruvate2.x = 340;
+//               pyruvate2.y = 380;
+//               h2o1.x = 160;
+//               h2o1.y = 510;
+//               h2o2.x = 340;
+//               h2o2.y = 510;
+//             }
+//           }
+//         }
+//         pyr = false;
+//         phosphate1.x += (adp1.x - phosphate1.x) * 0.05;
+//         phosphate1.y += (adp1.y - phosphate1.y) * 0.05;
+//         phosphate2.x += (adp2.x - phosphate2.x) * 0.05;
+//         phosphate2.y += (adp2.y - phosphate2.y) * 0.05;
+//         phosphate3.x += (adp3.x - phosphate3.x) * 0.05;
+//         phosphate3.y += (adp3.y - phosphate3.y) * 0.05;
+//         phosphate4.x += (adp4.x - phosphate4.x) * 0.05;
+//         phosphate4.y += (adp4.y - phosphate4.y) * 0.05;
+//         if (d3 < 180 && d4 < 180 && d5 < 180 && d6 < 180) {
+//           adp1.x = 7000;
+//           adp2.x = 7000;
+//           adp3.x = 7000;
+//           adp4.x = 7000;
+//           atp1.x = 500;
+//           atp1.y = 265;
+//           atp2.x = 670;
+//           atp2.y = 265;
+//           atp3.x = 500;
+//           atp3.y = 520;
+//           atp4.x = 670;
+//           atp4.y = 520;
+//           transition = 2;
+//         }
+//       }
+//     }
+//   }
+// }
+
+// // ===================== SCREEN IS 3 ===================
+// if (leoScreen == 3) {
+//   function leoSetup() {
+//     createCanvas(800, 600);
+
+//     //Pyruvate
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Pyruvate",
+//       -100,
+//       520,
+//       140,
+//       130,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     // NAD+
+//     objects[objects.length] = new object(
+//       "NAD+",
+//       -570,
+//       500,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "NAD+",
+//       -400,
+//       500,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     //Electrons
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Electron",
+//       -100,
+//       345,
+//       45,
+//       45,
+//       false,
+//       [0, 255, 0],
+//       true,
+//       0
+//     );
+
+//     //NADH
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "NADH",
+//       -100,
+//       390,
+//       100,
+//       100,
+//       false,
+//       [173, 216, 230],
+//       true,
+//       0
+//     );
+
+//     //CO2
+//     objects[objects.length] = new object(
+//       "CO2",
+//       180,
+//       400,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "CO2",
+//       360,
+//       400,
+//       100,
+//       100,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+
+//     //Acetyl CoA
+//     objects[objects.length] = new object(
+//       "Acetyl CoA",
+//       160,
+//       390,
+//       130,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+
+//     objects[objects.length] = new object(
+//       "Acetyl CoA",
+//       340,
+//       390,
+//       130,
+//       140,
+//       false,
+//       [0, 255, 0],
+//       false,
+//       0
+//     );
+
+//     button3 = createButton("Link Reaction");
+//     button3.position(20, 20);
+//     button3.mousePressed(startLink);
+//     button3.style("font-size", "24px");
+//     button3.style("padding", "15px");
+//     button3.style("border-radius", "10px");
+//     button3.style("cursor", "pointer");
+//   }
+//   function startLink() {
+//     link = true;
+//   }
+
+//   function leo() {
+//     background(220);
+//     imageMode(CENTER);
+//     var pyruvate1 = objects[0];
+//     var pyruvate2 = objects[1];
+//     var nad1 = objects[2];
+//     var nad2 = objects[3];
+//     var electron1 = objects[4];
+//     var electron2 = objects[5];
+//     var electron3 = objects[6];
+//     var electron4 = objects[7];
+//     var nadh1 = objects[8];
+//     var nadh2 = objects[9];
+//     var co21 = objects[10];
+//     var co22 = objects[11];
+//     var acetyl1 = objects[12];
+//     var acetyl2 = objects[13];
+//     image(Mitochondria, 370, 290, ms, ms2);
+//     mdelay += 1;
+//     if (mdelay > 100 && mdelay < 180) {
+//       ms *= 1.1;
+//       ms2 *= 1.1;
+//     }
+//     if (mdelay > 190) {
+//       textSize(22);
+//       text(linkdes, 223, 25, 545);
+//       let d12 = dist(nad1.x, nad1.y, pyruvate2.x, pyruvate2.y);
+//       let d13 = dist(nad2.x, nad2.y, pyruvate1.x, pyruvate1.y);
+//       let d14 = dist(electron1.x, electron1.y, nad1.x, nad1.y);
+//       let d15 = dist(electron2.x, electron2.y, nad1.x, nad1.y);
+//       let d16 = dist(electron3.x, electron3.y, nad2.x, nad2.y);
+//       let d17 = dist(electron4.x, electron4.y, nad2.x, nad2.y);
+//       //let d11 = dist(h1.x, h1.y, nad2.x, nad2.y);
+//       if (link == true) {
+//         pyruvate1.x = 160;
+//         pyruvate1.y = 390;
+//         pyruvate2.x = 340;
+//         pyruvate2.y = 390;
+//         electron1.x = 175;
+//         electron1.y = 320;
+//         electron2.x = 355;
+//         electron2.y = 320;
+//         electron3.x = 135;
+//         electron3.y = 320;
+//         electron4.x = 315;
+//         electron4.y = 320;
+//         if (nad1.x < 500 && stop == true) {
+//           nad1.x += 4;
+//           nad2.x += 4;
+//         } else {
+//           stop = false;
+//           objects[2].draggable = true;
+//           objects[3].draggable = true;
+//           if (stop == false) {
+//             if (d12 < 70) {
+//               objects[5].working = false;
+//               objects[7].working = false;
+//               objects[11].working = true;
+//               nadh1.x = nad1.x;
+//               nadh1.y = nad1.y;
+//               nad1.x = 1000;
+//               nadhmove1 = true;
+//               objects[2].draggable = false;
+//               nadhmove1 = true;
+//               pshower = 2;
+//               if (pshower == 2) {
+//                 if (timeRin < 20) {
+//                   timeRin += 1;
+//                   particleShower(
+//                     pyruvate2.x,
+//                     pyruvate2.y,
+//                     500,
+//                     0,
+//                     40,
+//                     0,
+//                     0.3,
+//                     0,
+//                     2,
+//                     0,
+//                     20,
+//                     80,
+//                     180,
+//                     240,
+//                     0,
+//                     20
+//                   );
+//                   objects[1].working = false;
+//                   objects[13].working = true;
+//                 }
+//               }
+//             }
+//             if (d13 < 70) {
+//               objects[4].working = false;
+//               objects[6].working = false;
+//               objects[10].working = true;
+//               nadh2.x = nad2.x;
+//               nadh2.y = nad2.y;
+//               nad2.x = 1000;
+//               nadhmove2 = true;
+//               objects[3].draggable = false;
+//               pshower = 3;
+//               if (pshower == 3) {
+//                 if (timeRen < 20) {
+//                   timeRen += 1;
+//                   particleShower(
+//                     pyruvate1.x,
+//                     pyruvate1.y,
+//                     500,
+//                     0,
+//                     40,
+//                     0,
+//                     0.3,
+//                     0,
+//                     2,
+//                     0,
+//                     20,
+//                     80,
+//                     180,
+//                     240,
+//                     0,
+//                     20
+//                   );
+//                   objects[0].working = false;
+//                   objects[12].working = true;
+//                 }
+//               }
+//             }
+//             if (nadhmove2 == true && nadhmove1 == true) {
+//               co21.x += 2;
+//               co21.y += 1;
+//               co22.x += 2;
+//               co22.y += 1;
+//               nadh1.x += 3;
+//               nadh2.x += 3;
+//               nadh1.y -= 1;
+//               nadh2.y -= 1;
+//               objects[1].working = false;
+//               objects[0].working = false;
+//               objects[12].working = true;
+//             }
+//           }
+//           textSize(16);
+//           text(
+//             "*drag an NAD+ to a Pyruvate molecule, drag the second NAD+ to the second   Pyruvate molecule*",
+//             40,
+//             120,
+//             150
+//           );
+//         }
+//       }
+//     }
+//   }
+// }
