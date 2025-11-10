@@ -5,7 +5,7 @@ var objects=[]
 var nextBtn;
 var nextAnim=[50,1,34]
 var nextAnimationSequence=new animation(nextAnim)
-var setupRun=[false,false,false,false,false]
+var setupRun=[false,false,false,false,false,false,false,false]
   
 var Mitochondria;
 var ThreeCarbonChain;
@@ -236,6 +236,10 @@ function draw() {
   runObjects()
     shaayer()
   }else if(screen==6){
+    if(setupRun[6]==false){
+      andreSetup()
+      setupRun[6]=true
+    }
     andre()
   }else if(screen==7){
     conclusion()

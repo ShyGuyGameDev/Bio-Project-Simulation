@@ -129,10 +129,10 @@ class andreTextBox {
     pop();
   }
 }
-
+andreNextBtn = new button(800 - 150, 800 - 80, 130, 60);
 function andreSetup() {
   // Create NEXT button
-  andreNextBtn = new button(width - 150, height - 80, 130, 60);
+  
 
   // Initialize textboxes for tutorial
   andreTextboxes = [
