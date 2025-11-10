@@ -1,4 +1,4 @@
-var screen = 5
+var screen = -2
 var particles=[]
 var mouseClick=false
 var objects=[]
