@@ -1,262 +1,3 @@
-[Duck Clan] Andre
-andreqiu
-Online
-
-[Duck Clan] Andre — 8/3/25, 9:29 AM
-Leo's party is being rescheduled to the 24th
-[Duck Clan] Andre — 10/20/25, 5:24 PM
-JOIN THE MEET
-https://meet.google.com/his-qumg-zya
-Meet
-Real-time meetings by Google. Using your browser, share your video, desktop, and presentations with teammates and customers.
-Image
-@Qazi Shaayer Alam
-We can also video call here
-if you want
-@Qazi Shaayer Alam @Qazi Shaayer Alam
-Qazi Shaayer Alam
-
- — 10/20/25, 5:30 PM
-Hi
-Just got home
-Gimme one sec
-[Duck Clan] Andre — 10/20/25, 5:30 PM
-Cool
-https://meet.google.com/his-qumg-zya
-Meet
-Real-time meetings by Google. Using your browser, share your video, desktop, and presentations with teammates and customers.
-Image
-Qazi Shaayer Alam
-
- — 10/20/25, 5:38 PM
-qalam0720@gmail.com
-[Duck Clan] Andre — 10/20/25, 5:39 PM
-andreqiu99@gmail.com
-Qazi Shaayer Alam
-
- — 10/20/25, 7:39 PM
-pls give me access to change repo settings
-im gonna add github pages and stuff 
-[Duck Clan] Andre — 11/6/25, 7:13 PM
-maren.js will be ready in 30mins
-Qazi Shaayer Alam
-
- — 11/6/25, 7:18 PM
-K cool
-Can’t believe u r doing her whole thing
-She just can’t do it ig
-[Duck Clan] Andre — 11/6/25, 7:19 PM
-...
-lemme focus
-Qazi Shaayer Alam
-
- — 11/6/25, 7:19 PM
-One question
-[Duck Clan] Andre — 11/6/25, 7:19 PM
-?
-Qazi Shaayer Alam
-
- — 11/6/25, 7:19 PM
-Does object class make it easier
-[Duck Clan] Andre — 11/6/25, 7:19 PM
-a bit
-honestly its the same to just render images at the pos
-saves ~1 line of code per object
-Qazi Shaayer Alam
-
- — 11/6/25, 7:20 PM
-U r not using the drag feature? 
-[Duck Clan] Andre — 11/6/25, 7:20 PM
-no
-Qazi Shaayer Alam
-
- — 11/6/25, 7:20 PM
-K
-Idc
-Also it doesn’t have to be very good
-Just an mvp
-[Duck Clan] Andre — 11/6/25, 7:39 PM
-maren.js done, commited to git
-Qazi Shaayer Alam
-
- — 11/6/25, 7:39 PM
-What’s the file name on P5?
-I’m eating dinner, but I’ll put them all into one P5 project after
-[Duck Clan] Andre — 11/6/25, 7:40 PM
-Bio MAKE A COPY OF THIS FOR THE NEXT COMPILING PLS SHAAAYER Maren copy (the first one)
-Ill make andre.js more interactive
-Qazi Shaayer Alam
-
- — 11/6/25, 7:40 PM
-K
-[Duck Clan] Andre — 11/6/25, 8:55 PM
-im done with mine, and also maren's. commited to git
-Qazi Shaayer Alam
-
- — 11/6/25, 9:16 PM
-btw u need to call the nextButton() function when you want the player to move on
-right now, that function is not happening
-[Duck Clan] Andre — 11/6/25, 9:17 PM
-it is
-look in git version
-Qazi Shaayer Alam
-
- — 11/6/25, 9:17 PM
-what is the p5 project name exactly
-[Duck Clan] Andre — 11/6/25, 9:17 PM
-Bio New-Andre
-Qazi Shaayer Alam
-
- — 11/6/25, 9:18 PM
-o cool
-[Duck Clan] Andre — 11/6/25, 9:18 PM
-I made tutorial
-for mine
-[Duck Clan] Andre — 9:10 PM
-I updated my code a lot
-@Qazi Shaayer Alam
-its in my github repo
-Please respond
-Qazi Shaayer Alam
-
- — 9:13 PM
-ok
-i responded
-[Duck Clan] Andre — 9:15 PM
-bru
-Can you update your repo
-Full code btw
-// Electron Transport Chain Simulation for andre.js
-
-var waterCount = 0
-
-// Tutorial Scene Variables (Simple like maren.js)
-var andreScene = 0;
-var andreTextboxes = [];
-var andreNextBtn;
-var andreBackBtn;
-var mouseWasReleasedAfterTutorial = false;
-
-// Step-by-step interactive mode
-var etcStep = 0; // Current step in step-by-step mode
-var etcMaxSteps = 12; // Total steps in step-by-step mode
-var stepTriggered = {}; // Track which steps have been triggered (to prevent spam)
-var stepActionComplete = {}; // Track if current step's action is complete
-var hasCompletedStepMode = false; // Track if user completed step mode or switched modes
-var modeSwitchCount = 0; // Track mode switches
-
-// Dragging state for interactive mode
-var draggedElement = null;
-var dragOffsetX = 0;
-var dragOffsetY = 0;
-var justDropped = false; // Prevent info panel on drag release
-
-// ETC State Variables
-var etcState = {
-    initialized: false,
-    proteinComplexes: [],
-    electrons: [],
-    protons: [],
-    atpMolecules: [],
-    oxygenMolecules: [],
-    waterMolecules: [],
-    nadh: [],
-    fadh2: [],
-    atpSynthase: null,
-    membraneY: 0,
-    matrixY: 0,
-    intermembraneY: 0,
-    protonGradient: 0,
-    atpCount: 0,
-    electronCount: 0,
-    timeCounter: 0,
-    paused: true, // Start paused for step-by-step control
-    mode: 'STEP', // STEP, AUTO, or MANUAL - start in STEP mode for interactivity
-    selectedElement: null,
-    selectedSubtab: null,
-    currentHighlight: null // Which element to highlight during step mode
-};
-
-// Information database for all elements
-var elementInfo = {
-    complex1: {
-        name: "Complex I (NADH Dehydrogenase)",
-        description: "Complex I is the first and largest protein complex in the electron transport chain. It accepts electrons from NADH (which becomes NAD+) and pumps 4 H+ ions (protons) across the inner mitochondrial membrane into the intermembrane space through active transport. This creates part of the electrochemical gradient used to produce ATP through chemiosmosis."
-    },
-    complex2: {
-        name: "Complex II (Succinate Dehydrogenase)",
-        description: "Complex II is a protein complex that accepts electrons from FADH2 (which becomes FAD) produced during the Krebs cycle. Unlike other complexes, Complex II does not pump protons across the membrane, but it still plays a crucial role in transferring electrons (e-) to Coenzyme Q in the electron transport chain."
-    },
-    complex3: {
-        name: "Complex III (Cytochrome bc1 Complex)",
-        description: "Complex III is a protein complex that receives electrons from Coenzyme Q and transfers them to Cytochrome C. During this process, it uses active transport to pump 4 H+ ions (protons) across the inner mitochondrial membrane, contributing to the electrochemical gradient. This complex uses the Q-cycle mechanism for electron transfer."
-    },
-    complex4: {
-        name: "Complex IV (Cytochrome C Oxidase)",
-        description: "Complex IV is the final protein complex in the electron transport chain. It transfers electrons (e-) to oxygen (O2), the final electron acceptor, forming water (H2O). It also pumps 2 H+ ions across the membrane through active transport. Without oxygen, the entire electron transport chain stops, which is why we need to breathe!"
-    },
-    atpSynthase: {
-        name: "ATP Synthase",
-        description: "ATP Synthase is a protein complex and molecular machine that produces ATP through oxidative phosphorylation. As H+ ions (protons) flow back through ATP Synthase via facilitated diffusion from the intermembrane space to the mitochondrial matrix, the enzyme rotates and catalyzes: ADP + Pi → ATP. This process is called chemiosmosis."
-    },
-    intermembrane: {
-        name: "Intermembrane Space",
-        description: "The intermembrane space is the region between the inner and outer membranes of the mitochondria. During the electron transport chain, H+ ions (protons) accumulate here through active transport, creating a high concentration. This electrochemical gradient (both electrical and chemical) stores potential energy that drives ATP synthesis."
-    },
-    matrix: {
-        name: "Mitochondrial Matrix",
-        description: "The mitochondrial matrix is the innermost compartment of the mitochondrion (plural: mitochondria). It contains enzymes for the Krebs cycle and is where NADH and FADH2 are produced. The matrix has a lower H+ concentration than the intermembrane space, creating the electrochemical gradient needed for ATP synthesis through the inner mitochondrial membrane.",
-        subtabs: {
-            nadh: {
-                name: "NADH / NAD+ (Electron Carrier)",
-                description: "NADH (reduced form) is an electron carrier produced during glycolysis and the Krebs cycle. It carries high-energy electrons (e-) to Complex I in the inner mitochondrial membrane, where it becomes NAD+ (oxidized form). Approximately 10 NADH molecules are used per glucose, contributing to ~25 ATP through oxidative phosphorylation."
-            },
-            fadh2: {
-                name: "FADH₂ / FAD (Electron Carrier)",
-                description: "FADH₂ (reduced form) is an electron carrier produced during the Krebs cycle. It delivers electrons (e-) to Complex II in the inner mitochondrial membrane, where it becomes FAD (oxidized form). Approximately 2 FADH2 molecules are used per glucose, entering the ETC later than NADH and contributing to ~3 ATP through oxidative phosphorylation."
-            },
-            oxygen: {
-                name: "Oxygen (O₂) - Final Electron Acceptor",
-                description: "Oxygen is the final electron acceptor in the electron transport chain. At Complex IV, O2 combines with electrons (e-) and H+ ions (protons) to form water (H₂O): O2 + 4e- + 4H+ → 2H2O. About 6 O2 molecules are used per glucose. Oxygen's high electronegativity makes it an excellent electron acceptor, which is why aerobic respiration is so efficient and why we need to breathe!"
-            },
-            water: {
-                name: "Water (H₂O) - Product",
-                description: "Water is the byproduct formed when oxygen accepts electrons at Complex IV. The reaction is: O2 + 4e- + 4H+ → 2H2O. Approximately 6 water molecules are produced per glucose molecule during cellular respiration. This metabolic water is actually part of the water your body produces and is mixed with the water you exhale with each breath!"
-            },
-            atp: {
-                name: "ATP / ADP (Energy Currency)",
-                description: "ATP (adenosine triphosphate) is the cell's energy currency. It's produced when ADP (adenosine diphosphate) combines with inorganic phosphate (Pi) through oxidative phosphorylation at ATP Synthase: ADP + Pi → ATP. The ETC produces approximately 32-34 ATP per glucose molecule - the most of any cellular respiration stage!"... (24 KB left)
-Collapse
-message.txt
-74 KB
-Qazi Shaayer Alam
-
- — 9:17 PM
-Yeah
-I wil
-[Duck Clan] Andre — 9:17 PM
-?
-Qazi Shaayer Alam
-
- — 9:17 PM
-Later
-after my spanish hw
-[Duck Clan] Andre — 9:18 PM
-ok do i have edit access to your reop?
-*repo
-Qazi Shaayer Alam
-
- — 9:19 PM
-I am tyring to add u
-i added u
-﻿
-🫡Build the impossible
-Qazi Shaayer Alam
-shyguygamedev
-He/Him
-
- 
-Co-Founder of Empty Console. On Empty Console, I run the business side as well as program. Check out my website: https://sites.google.com/view/shyguygamedev/home?authuser=0
 // Electron Transport Chain Simulation for andre.js
 
 var waterCount = 0
@@ -1576,6 +1317,707 @@ function drawStepControls() {
     // Mode toggle - small text button
     let modeX = barX + barWidth - 45;
     let hoverMode = mouseX > modeX && mouseX < modeX + 35 && mouseY > btnY && mouseY < btnY + btnH;
-    fill(hoverMode ? 100 : 70, hoverMo... (24 KB left)
-message.txt
-74 KB
+    fill(hoverMode ? 100 : 70, hoverMode ? 70 : 50, hoverMode ? 130 : 100);
+    rect(modeX, btnY, 35, btnH, 4);
+    fill(255);
+    textSize(9);
+    textAlign(CENTER, CENTER);
+    text(etcState.mode === 'STEP' ? "Auto" : "Step", modeX + 17, btnY + btnH/2);
+
+    if (mouseClick && hoverMode) {
+        modeSwitchCount++; // Track that user switched modes
+        resetETCState(); // Reset simulation on mode switch
+
+        if (etcState.mode === 'STEP') {
+            etcState.mode = 'AUTO';
+            etcState.paused = false;
+        } else {
+            etcState.mode = 'STEP';
+            etcState.paused = true;
+            etcStep = 0;
+            stepTriggered = {};
+        }
+    }
+
+    pop();
+
+    // Draw step description if in STEP mode - more compact
+    if (etcState.mode === 'STEP' && stepDescriptions[etcStep]) {
+        drawStepDescription();
+        // Ensure molecules exist for current step
+        ensureStepMolecules(etcStep);
+    }
+}
+
+function triggerStepAction(step) {
+    // Ensure molecules exist for each step
+    ensureStepMolecules(step);
+}
+
+function resetETCState() {
+    // Reset all molecules
+    etcState.electrons = [];
+    etcState.protons = [];
+    etcState.atpMolecules = [];
+    etcState.oxygenMolecules = [];
+    etcState.waterMolecules = [];
+    waterCount = 0;
+    etcState.atpCount = 0;
+    etcState.electronCount = 0;
+
+    // Reset NADH and FADH2
+    etcState.nadh = [];
+    etcState.fadh2 = [];
+    for (let i = 0; i < 3; i++) {
+        etcState.nadh.push({
+            x: 50 + random(0, 30),
+            y: etcState.matrixY + random(-30, 30),
+            size: 30,
+            hasElectrons: true,
+            moving: false,
+            targetComplex: 0
+        });
+    }
+    etcState.fadh2.push({
+        x: 50,
+        y: etcState.matrixY + 50,
+        size: 30,
+        hasElectrons: true,
+        moving: false,
+        targetComplex: 1
+    });
+
+    // Reset complex active states
+    for (let i = 0; i < etcState.proteinComplexes.length; i++) {
+        etcState.proteinComplexes[i].active = false;
+    }
+    etcState.atpSynthase.active = false;
+    etcState.atpSynthase.rotation = 0;
+
+    // Reset step triggers and action completion
+    stepTriggered = {};
+    stepActionComplete = {};
+}
+
+function ensureStepMolecules(step) {
+    let currentAction = stepDescriptions[step] ? stepDescriptions[step].action : null;
+    let complexIndex = -1;
+
+    // Determine which complex based on highlight
+    let highlight = stepDescriptions[step] ? stepDescriptions[step].highlight : null;
+    if (highlight === 'complex1') complexIndex = 0;
+    else if (highlight === 'complex2') complexIndex = 1;
+    else if (highlight === 'complex3') complexIndex = 2;
+    else if (highlight === 'complex4') complexIndex = 3;
+
+    // DRAG ACTIONS - ensure molecules exist
+    if (currentAction === 'drag_nadh') {
+        let hasNADH = etcState.nadh.some(n => n.hasElectrons);
+        if (!hasNADH) {
+            etcState.nadh.push({
+                x: 100,
+                y: etcState.matrixY + 30,
+                size: 35,
+                hasElectrons: true,
+                moving: false,
+                targetComplex: 0
+            });
+        }
+    }
+
+    if (currentAction === 'drag_fadh2') {
+        let hasFADH2 = etcState.fadh2.some(f => f.hasElectrons);
+        if (!hasFADH2) {
+            etcState.fadh2.push({
+                x: 100,
+                y: etcState.matrixY + 80,
+                size: 35,
+                hasElectrons: true,
+                moving: false,
+                targetComplex: 1
+            });
+        }
+    }
+
+    if (currentAction === 'drag_oxygen') {
+        if (etcState.oxygenMolecules.length < 1) {
+            etcState.oxygenMolecules.push({
+                x: width - 150,
+                y: etcState.matrixY + 30,
+                size: 30,
+                vx: random(-0.5, 0.5),
+                vy: random(-0.5, 0.5)
+            });
+        }
+    }
+
+    // WATCH action - just activate the highlighted complex
+    if (currentAction === 'watch' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        stepActionComplete[step] = true; // Watch actions complete immediately
+        if (complexIndex >= 0) {
+            etcState.proteinComplexes[complexIndex].active = true;
+        }
+    }
+
+    // PUMP PROTONS action - pump H+ at highlighted complex
+    if (currentAction === 'pump_protons' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        stepActionComplete[step] = true; // Pump actions complete immediately
+        if (complexIndex >= 0) {
+            etcState.proteinComplexes[complexIndex].active = true;
+            let numProtons = (complexIndex === 0 || complexIndex === 2) ? 4 : 2; // Complex I & III pump 4, IV pumps 2
+            // Create protons directly in intermembrane space (result of pumping)
+            for (let j = 0; j < numProtons; j++) {
+                etcState.protons.push({
+                    x: etcState.proteinComplexes[complexIndex].x + random(-40, 40),
+                    y: etcState.intermembraneY + random(-20, 20),
+                    size: 12,
+                    targetY: etcState.intermembraneY,
+                    pumped: true,
+                    floatX: random(-0.5, 0.5),
+                    floatY: random(-0.5, 0.5)
+                });
+            }
+        }
+    }
+
+    // ELECTRON TRANSFER action - show electron at target complex
+    if (currentAction === 'electron_transfer' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        stepActionComplete[step] = true; // Electron transfer completes immediately
+        if (complexIndex >= 0) {
+            etcState.proteinComplexes[complexIndex].active = true;
+            // Create electron directly at this complex (result of transfer)
+            if (etcState.electrons.length < 3) {
+                etcState.electrons.push({
+                    x: etcState.proteinComplexes[complexIndex].x,
+                    y: etcState.proteinComplexes[complexIndex].y,
+                    size: 8,
+                    currentComplex: complexIndex,
+                    targetComplex: complexIndex + 1,
+                    speed: 1.5
+                });
+                etcState.electronCount++;
+            }
+        }
+    }
+
+    // FORM WATER action - show water and pumped protons immediately
+    if (currentAction === 'form_water' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        stepActionComplete[step] = true; // Water formation completes immediately
+        etcState.proteinComplexes[3].active = true;
+        // Add protons directly to intermembrane space (Complex IV pumps 2)
+        for (let j = 0; j < 2; j++) {
+            etcState.protons.push({
+                x: etcState.proteinComplexes[3].x + random(-40, 40),
+                y: etcState.intermembraneY + random(-20, 20),
+                size: 12,
+                targetY: etcState.intermembraneY,
+                pumped: true,
+                floatX: random(-0.5, 0.5),
+                floatY: random(-0.5, 0.5)
+            });
+        }
+        // Create water immediately
+        etcState.waterMolecules.push({
+            x: etcState.proteinComplexes[3].x + random(-30, 30),
+            y: etcState.proteinComplexes[3].y + 60,
+            size: 20,
+            life: 9999 // Long life so it stays visible
+        });
+        waterCount++;
+    }
+
+    // ATP PRODUCTION action - show ATP immediately
+    if (currentAction === 'atp_production' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        stepActionComplete[step] = true; // ATP production completes immediately
+        etcState.atpSynthase.active = true;
+        etcState.atpSynthase.rotation += 90;
+        // Create ATP molecules immediately (result of chemiosmosis)
+        for (let j = 0; j < 3; j++) {
+            etcState.atpMolecules.push({
+                x: etcState.atpSynthase.x + random(-20, 20),
+                y: etcState.atpSynthase.y + 70 + j * 25,
+                size: 25,
+                life: 9999, // Long life so it stays visible
+                vx: 0,
+                vy: 0
+            });
+            etcState.atpCount++;
+        }
+    }
+
+    // FULL AUTO mode - reset and run full simulation
+    if (currentAction === 'auto' && !stepTriggered[step]) {
+        stepTriggered[step] = true;
+        hasCompletedStepMode = true; // User completed step mode
+
+        resetETCState(); // Reset for fresh auto simulation
+
+        // Start auto mode
+        etcState.paused = false;
+        etcState.mode = 'AUTO';
+    }
+}
+
+function drawStepDescription() {
+    let step = stepDescriptions[etcStep];
+
+    push();
+    // Measure text to fit box properly
+    textSize(14);
+    let titleWidth = textWidth(step.title);
+    textSize(11);
+    let descWidth = textWidth(step.description);
+
+    // Calculate box dimensions
+    let padding = 30;
+    let boxWidth = max(titleWidth, descWidth) + padding * 2;
+    boxWidth = min(boxWidth, width - 40); // Max width with margins
+
+    let boxX = (width - boxWidth) / 2;
+
+    // Description box - sized to fit content
+    fill(0, 0, 0, 220);
+    stroke(255, 200, 100);
+    strokeWeight(2);
+    rect(boxX, 8, boxWidth, 50, 8);
+
+    // Title
+    fill(255, 200, 100);
+    textSize(14);
+    textAlign(CENTER);
+    noStroke();
+    text(step.title, width/2, 28);
+
+    // Description
+    fill(220);
+    textSize(11);
+    text(step.description, width/2, 46);
+
+    pop();
+
+    // Set current highlight
+    etcState.currentHighlight = step.highlight;
+}
+
+// Old unused functions removed
+
+function isClickOnUIButton() {
+    // Check if click is on tutorial textbox area
+    if (andreScene < 8) {
+        if (mouseX > 10 && mouseX < 790 && mouseY > 10 && mouseY < 150) {
+            return true;
+        }
+    }
+
+    // Check if click is on tutorial NEXT button
+    if (andreScene < 8 && andreNextBtn) {
+        let btnSize = andreNextBtn.sizeX;
+        let btnX = andreNextBtn.x - btnSize / 2;
+        let btnY = andreNextBtn.y - andreNextBtn.sizeY / 2;
+        if (mouseX > btnX && mouseX < btnX + btnSize &&
+            mouseY > btnY && mouseY < btnY + andreNextBtn.sizeY) {
+            return true;
+        }
+    }
+
+    // Check if click is on info panel area (bottom left stats)
+    if (mouseX < 195 && mouseY > height - 100) {
+        return true;
+    }
+
+    // Check if click is on step control bar (bottom center)
+    let barWidth = 280;
+    let barX = (width - barWidth) / 2;
+    if (mouseX > barX - 5 && mouseX < barX + barWidth + 5 && mouseY > height - 55 && mouseY < height - 10) {
+        return true;
+    }
+
+    // Check if click is on NEXT button area
+    if (mouseWasReleasedAfterTutorial) {
+        let nextBtnX = nextBtn.x - nextBtn.sizeX / 2;
+        let nextBtnY = nextBtn.y - nextBtn.sizeY / 2;
+        if (mouseX > nextBtnX && mouseX < nextBtnX + nextBtn.sizeX &&
+            mouseY > nextBtnY && mouseY < nextBtnY + nextBtn.sizeY) {
+            return true;
+        }
+    }
+
+    // Check if step description panel is showing (compact box at top)
+    if (etcState.mode === 'STEP' && stepDescriptions[etcStep]) {
+        if (mouseY > 8 && mouseY < 58) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+function handleElementClicks() {
+    // Check complexes
+    for (let i = 0; i < etcState.proteinComplexes.length; i++) {
+        let complex = etcState.proteinComplexes[i];
+        if (mouseX > complex.x - complex.width / 2 && mouseX < complex.x + complex.width / 2 &&
+            mouseY > complex.y - complex.height / 2 && mouseY < complex.y + complex.height / 2) {
+            etcState.selectedElement = 'complex' + complex.type;
+            etcState.selectedSubtab = null;
+            return;
+        }
+    }
+
+    // Check ATP Synthase
+    let synthase = etcState.atpSynthase;
+    if (mouseX > synthase.x - synthase.width && mouseX < synthase.x + synthase.width &&
+        mouseY > synthase.y - synthase.height / 2 && mouseY < synthase.y + synthase.height / 2) {
+        etcState.selectedElement = 'atpSynthase';
+        etcState.selectedSubtab = null;
+        return;
+    }
+
+    // Check intermembrane space
+    if (mouseY < etcState.membraneY - 50) {
+        etcState.selectedElement = 'intermembrane';
+        etcState.selectedSubtab = null;
+        return;
+    }
+
+    // Check mitochondrial matrix
+    if (mouseY > etcState.membraneY + 50) {
+        etcState.selectedElement = 'matrix';
+        etcState.selectedSubtab = 'nadh';
+        return;
+    }
+}
+
+function drawClickableRegions() {
+    push();
+    // Draw step highlights on complexes (no hover tooltips to reduce clutter)
+    for (let i = 0; i < etcState.proteinComplexes.length; i++) {
+        let complex = etcState.proteinComplexes[i];
+        let isHovered = mouseX > complex.x - complex.width / 2 && mouseX < complex.x + complex.width / 2 &&
+            mouseY > complex.y - complex.height / 2 && mouseY < complex.y + complex.height / 2;
+        let isHighlighted = etcState.currentHighlight === 'complex' + complex.type;
+
+        // Draw highlight for current step
+        if (isHighlighted && etcState.mode === 'STEP') {
+            noFill();
+            stroke(255, 200, 100, 150 + sin(frameCount * 5) * 50);
+            strokeWeight(3);
+            rect(complex.x - complex.width / 2 - 5, complex.y - complex.height / 2 - 5,
+                complex.width + 10, complex.height + 10, 10);
+        }
+
+        // Simple hover indicator
+        if (isHovered && !isHighlighted) {
+            noFill();
+            stroke(255, 255, 255, 100);
+            strokeWeight(2);
+            rect(complex.x - complex.width / 2 - 3, complex.y - complex.height / 2 - 3,
+                complex.width + 6, complex.height + 6, 8);
+        }
+    }
+
+    // ATP Synthase highlight
+    let synthase = etcState.atpSynthase;
+    let isSynthaseHovered = mouseX > synthase.x - synthase.width && mouseX < synthase.x + synthase.width &&
+        mouseY > synthase.y - synthase.height / 2 && mouseY < synthase.y + synthase.height / 2;
+    let isSynthaseHighlighted = etcState.currentHighlight === 'atpSynthase';
+
+    if (isSynthaseHighlighted && etcState.mode === 'STEP') {
+        noFill();
+        stroke(255, 200, 100, 150 + sin(frameCount * 5) * 50);
+        strokeWeight(3);
+        rect(synthase.x - synthase.width - 5, synthase.y - synthase.height / 2 - 5,
+            synthase.width * 2 + 10, synthase.height + 10, 10);
+    }
+
+    if (isSynthaseHovered && !isSynthaseHighlighted) {
+        noFill();
+        stroke(255, 255, 255, 100);
+        strokeWeight(2);
+        rect(synthase.x - synthase.width - 3, synthase.y - synthase.height / 2 - 3,
+            synthase.width * 2 + 6, synthase.height + 6, 8);
+    }
+
+    pop();
+}
+
+// ===== TUTORIAL NEXT BUTTON =====
+
+function drawAndreNextButton() {
+    push();
+    translate(andreNextBtn.x, andreNextBtn.y);
+    rectMode(CENTER);
+    fill("black");
+    strokeWeight(10);
+    stroke("white");
+
+    if (andreNextBtn.hover) {
+        andreNextBtn.sizev = max(0.05, andreNextBtn.sizev);
+        scale(andreNextBtn.size, andreNextBtn.size);
+    } else {
+        andreNextBtn.sizev = min(0.01, andreNextBtn.sizev);
+        scale(andreNextBtn.size, andreNextBtn.size);
+    }
+
+    rect(0, 0, andreNextBtn.sizeX, andreNextBtn.sizeY, 5);
+    textAlign(CENTER);
+    textSize(35);
+    fill("white");
+    noStroke();
+    rotate(cos(frameCount * 2) * 5);
+    text(andreScene >= 7 ? "FINISH" : "NEXT", 0, 12, andreNextBtn.sizeX, andreNextBtn.sizeY);
+    pop();
+
+    andreNextBtn.work();
+
+    if (andreNextBtn.clicked && andreScene < 8) {
+        andreScene++;
+        // Note: mouseWasReleasedAfterTutorial stays false until mouse is released
+    }
+}
+
+function drawElementInfo() {
+    // Dim background
+    push();
+    fill(0, 0, 0, 200);
+    noStroke();
+    rect(0, 0, width, height);
+    pop();
+
+    let info = elementInfo[etcState.selectedElement];
+
+    // Left panel - Enlarged image
+    push();
+    fill(40, 40, 50);
+    stroke(100, 150, 200);
+    strokeWeight(3);
+    rect(50, 100, 350, 500, 15);
+
+    imageMode(CENTER);
+    let imgX = 225;
+    let imgY = 350;
+
+    // Draw appropriate enlarged image
+    if (etcState.selectedElement === 'complex1') {
+        image(ComplexOne, imgX, imgY, 200, 250);
+    } else if (etcState.selectedElement === 'complex2') {
+        image(ComplexTwo, imgX, imgY, 200, 250);
+    } else if (etcState.selectedElement === 'complex3') {
+        image(ComplexThree, imgX, imgY, 200, 250);
+    } else if (etcState.selectedElement === 'complex4') {
+        image(ComplexFour, imgX, imgY, 200, 250);
+    } else if (etcState.selectedElement === 'atpSynthase') {
+        image(ATPSynthase1, imgX, imgY, 150, 300);
+    } else if (etcState.selectedElement === 'matrix') {
+        // Draw subtab images
+        if (etcState.selectedSubtab === 'nadh') {
+            image(NADPH, imgX, imgY, 200, 200);
+        } else if (etcState.selectedSubtab === 'fadh2') {
+            image(FADH, imgX, imgY, 200, 200);
+        } else if (etcState.selectedSubtab === 'oxygen') {
+            image(OTwo, imgX, imgY, 200, 200);
+        } else if (etcState.selectedSubtab === 'water') {
+            image(HTwoO, imgX, imgY, 200, 200);
+        } else if (etcState.selectedSubtab === 'atp') {
+            image(Atp, imgX, imgY, 250, 180);
+        } else if (etcState.selectedSubtab === 'chemiosmosis') {
+            // Draw diagram showing H+ flow through ATP Synthase
+            noStroke();
+            fill(100, 150, 200, 100);
+            rect(imgX - 80, imgY - 100, 160, 60); // Intermembrane
+            fill(150, 100, 150, 100);
+            rect(imgX - 80, imgY + 40, 160, 60); // Matrix
+            fill(100, 100, 100);
+            rect(imgX - 80, imgY - 40, 160, 80); // Membrane
+
+            image(ATPSynthase1, imgX, imgY, 80, 160);
+
+            // H+ arrows
+            stroke(255, 200, 100);
+            strokeWeight(3);
+            line(imgX - 30, imgY - 60, imgX - 30, imgY + 60);
+            line(imgX - 30, imgY + 60, imgX - 20, imgY + 50);
+            line(imgX - 30, imgY + 60, imgX - 40, imgY + 50);
+
+            fill(255);
+            noStroke();
+            textSize(12);
+            textAlign(CENTER);
+            text("H+ flows down gradient", imgX, imgY + 90);
+            text("ATP produced!", imgX, imgY + 110);
+        } else if (etcState.selectedSubtab === 'oxidativePhosphorylation') {
+            // Draw diagram showing the two processes
+            noStroke();
+
+            // ETC side
+            fill(100, 150, 200);
+            rect(imgX - 100, imgY - 80, 90, 160, 10);
+            fill(255);
+            textSize(12);
+            textAlign(CENTER);
+            text("ETC", imgX - 55, imgY - 60);
+            text("e- flow", imgX - 55, imgY - 40);
+            text("H+ pumped", imgX - 55, imgY);
+
+            // Arrow
+            stroke(255, 200, 100);
+            strokeWeight(3);
+            line(imgX - 5, imgY, imgX + 15, imgY);
+            line(imgX + 15, imgY, imgX + 5, imgY - 10);
+            line(imgX + 15, imgY, imgX + 5, imgY + 10);
+
+            // ATP Synthase side
+            noStroke();
+            fill(200, 150, 100);
+            rect(imgX + 20, imgY - 80, 90, 160, 10);
+            fill(255);
+            text("ATP", imgX + 65, imgY - 60);
+            text("Synthase", imgX + 65, imgY - 40);
+            text("ADP+Pi→ATP", imgX + 65, imgY);
+
+            fill(255);
+            textSize(14);
+            text("= Oxidative Phosphorylation", imgX, imgY + 100);
+        } else if (etcState.selectedSubtab === 'electrochemicalGradient') {
+            // Draw gradient visualization
+            noStroke();
+
+            // High concentration area
+            fill(255, 100, 100);
+            rect(imgX - 80, imgY - 100, 160, 80, 10);
+            fill(255);
+            textSize(14);
+            textAlign(CENTER);
+            text("HIGH H+", imgX, imgY - 70);
+            text("(+) charge", imgX, imgY - 50);
+
+            // Membrane
+            fill(100, 100, 100);
+            rect(imgX - 80, imgY - 20, 160, 40);
+            fill(255);
+            textSize(12);
+            text("MEMBRANE", imgX, imgY + 5);
+
+            // Low concentration area
+            fill(100, 100, 255);
+            rect(imgX - 80, imgY + 20, 160, 80, 10);
+            fill(255);
+            textSize(14);
+            text("LOW H+", imgX, imgY + 50);
+            text("(-) charge", imgX, imgY + 70);
+
+            // Arrow showing force
+            stroke(255, 200, 100);
+            strokeWeight(4);
+            line(imgX + 100, imgY - 60, imgX + 100, imgY + 60);
+            line(imgX + 100, imgY + 60, imgX + 90, imgY + 50);
+            line(imgX + 100, imgY + 60, imgX + 110, imgY + 50);
+            noStroke();
+            fill(255, 200, 100);
+            textSize(10);
+            text("Force", imgX + 100, imgY + 80);
+        } else if (etcState.selectedSubtab === 'proteins') {
+            image(ComplexOne, imgX, imgY, 200, 250);
+        } else if (etcState.selectedSubtab === 'mitochondria') {
+            // Draw a simple representation of mitochondria using shapes
+            fill(100, 60, 100);
+            ellipse(imgX, imgY, 250, 150);
+            fill(120, 80, 120);
+            ellipse(imgX, imgY, 200, 100);
+            fill(255);
+            textSize(16);
+            text("Mitochondrion", imgX, imgY + 100);
+        }
+    } else if (etcState.selectedElement === 'intermembrane') {
+        image(H, imgX, imgY, 150, 150);
+    }
+
+    fill(255);
+    textSize(20);
+    textAlign(CENTER);
+    text(etcState.selectedElement === 'matrix' ?
+        info.subtabs[etcState.selectedSubtab].name : info.name,
+        225, 150);
+    pop();
+
+    // Right panel - Description
+    push();
+    fill(40, 40, 50);
+    stroke(100, 150, 200);
+    strokeWeight(3);
+    rect(420, 100, 330, 500, 15);
+
+    fill(255);
+    textSize(14);
+    textAlign(LEFT, TOP);
+    let desc = etcState.selectedElement === 'matrix' ?
+        info.subtabs[etcState.selectedSubtab].description :
+        info.description;
+    text(desc, 440, 130, 290, 400);
+
+    // Draw subtabs for matrix
+    if (etcState.selectedElement === 'matrix') {
+        let subtabs = ['nadh', 'fadh2', 'oxygen', 'water', 'atp', 'chemiosmosis', 'oxidativePhosphorylation', 'electrochemicalGradient', 'proteins', 'mitochondria'];
+        let subtabNames = ['NADH', 'FADH₂', 'O₂', 'H₂O', 'ATP', 'Chemio.', 'Ox. Phos.', 'Gradient', 'Proteins', 'Mito.'];
+        let tabY1 = 430;
+        let tabY2 = 470;
+        let tabY3 = 510;
+        let tabY4 = 550;
+
+        for (let i = 0; i < subtabs.length; i++) {
+            let row = Math.floor(i / 4);
+            let col = i % 4;
+            let tabX = 440 + col * 72;
+            let tabY = row === 0 ? tabY1 : row === 1 ? tabY2 : row === 2 ? tabY3 : tabY4;
+
+            if (etcState.selectedSubtab === subtabs[i]) {
+                fill(100, 150, 200);
+            } else {
+                fill(60, 60, 70);
+            }
+
+            stroke(150);
+            strokeWeight(2);
+            rect(tabX, tabY, 65, 35, 5);
+
+            fill(255);
+            noStroke();
+            textSize(9);
+            textAlign(CENTER, CENTER);
+            text(subtabNames[i], tabX + 32, tabY + 17);
+
+            // Check for clicks on subtabs
+            if (mouseClick && mouseX > tabX && mouseX < tabX + 65 &&
+                mouseY > tabY && mouseY < tabY + 35) {
+                etcState.selectedSubtab = subtabs[i];
+            }
+        }
+    }
+    pop();
+
+    // Close button
+    push();
+    fill(200, 50, 50);
+    stroke(255);
+    strokeWeight(2);
+    rect(width - 100, 50, 70, 40, 8);
+
+    fill(255);
+    noStroke();
+    textSize(16);
+    textAlign(CENTER, CENTER);
+    text("Close", width - 65, 70);
+
+    // Check for close button click
+    if (mouseClick && mouseX > width - 100 && mouseX < width - 30 &&
+        mouseY > 50 && mouseY < 90) {
+        etcState.selectedElement = null;
+        etcState.selectedSubtab = null;
+    }
+    pop();
+}

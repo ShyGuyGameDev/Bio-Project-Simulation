@@ -8,8 +8,6 @@
 //   }
 // }
 
-var buttonCounterVar=0
-
 function nextButtonWork(){
   if(nextAnimationSequence.running && nextAnimationSequence.count>0){
     nextAnimationSequence.count+=1
@@ -66,25 +64,9 @@ function nextButton(){
   pop()
   nextBtn.work()
   if(nextBtn.clicked){
-    if(buttonCounterVar<1){
-      nextAnimationSequence.running=true
+     nextAnimationSequence.running=true
     nextAnimationSequence.count+=1
-    }
-     buttonCounterVar+=1
-  }else{
-    buttonCounterVar=0
   }
-  
-   // if (avinextButton.clicked) {
-   //  if(aviCountVar<100)
-   //  aviCountVar+=1
-   //  aviscreen += 1;
-   //  console.log("Button detected");
-    
-  // }else{
-  //   // print("workrkk")
-  //   aviCountVar=0
-  // }
 }
 
 class animation{

@@ -1,11 +1,12 @@
-var screen = -2
+var screen=-2
+
 var particles=[]
 var mouseClick=false
 var objects=[]
 var nextBtn;
 var nextAnim=[50,1,34]
 var nextAnimationSequence=new animation(nextAnim)
-var setupRun=[false,false,false,false,false,false,false,false]
+var setupRun=[false,false,false,false,false]
   
 var Mitochondria;
 var ThreeCarbonChain;
@@ -79,10 +80,6 @@ var Curvyline;
 var Twistline;
 var Pep;
 var Krebs;
-
-
-
-
 
 function preload(){
   Mitochondria=loadImage("Art/download__22_-removebg-preview.png")
@@ -164,88 +161,68 @@ function setup() {
   noStroke()
   angleMode(DEGREES)
   background(22)
-  // objects[0]= new object("hi",width/2,height/2,20,20,true,[50,100,70])
   nextBtn= new button(width-150,height-80,185,70)
   textFont("Itim")
 }
 
-
-
 function draw() {
   background(22);
-  // imageMode(CENTER)
-  // image(CoenzymeA,width/2,height/2,width,height)
-//   particleDemo();
   
   if(screen==-2){
-    
     start()
     runParticles()
-  runObjects()
+    runObjects()
   }else if(screen==-1){
     photosynthesis()
     runParticles()
-  runObjects()
+    runObjects()
   }else if(screen==0){
     if(setupRun[0]==false){
       zoeSetup()
       setupRun[0]=true
     }
-    
-    zoe()
     runParticles()
-  runObjects()
-    
+    runObjects()
+    zoe()
   }else if(screen==1){
     if(setupRun[1]==false){
       marenSetup()
       setupRun[1]=true
     }
-    
     maren()
     runParticles()
-  runObjects()
+    runObjects()
   }else if(screen==2){
     if(setupRun[2]==false){
       aviSetup()
       setupRun[2]=true
     }
-    
     avi()
     runParticles()
-  runObjects()
+    runObjects()
   }else if(screen==3){
-    
     cellularRespiration()
-    
   }else if(screen==4){
     if(setupRun[3]==false){
       leoSetup()
       setupRun[3]=true
     }
-    
     leo()
     runParticles()
-  runObjects()
+    runObjects()
   }else if(screen==5){
     if(setupRun[4]==false){
       shaayerSetup()
       setupRun[4]=true
     }
     runParticles()
-  runObjects()
+    runObjects()
     shaayer()
   }else if(screen==6){
-    if(setupRun[6]==false){
-      andreSetup()
-      setupRun[6]=true
-    }
     andre()
   }else if(screen==7){
     conclusion()
   }
-  
-  
   
   nextAnimationSequence.work()
   nextButtonWork()
